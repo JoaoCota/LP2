@@ -27,7 +27,7 @@ class PaintFrame extends JFrame {
         this.r2 = new Rect(40,60,120,60,"#0000FF"/*azul*/,"#00FFFF"/*ciano*/);
         this.r3 = new Rect(60,80,140,90,"#4B0082"/*indigo*/,"#EE82EE"/*violeta*/);
         this.r4 = new Rect(80,100,160,120,"#FF8C00"/*laranja escuro*/,"#FFA500"/*laranja*/);
-        this.r4 = new Rect(100,120,180,140,"#006400"/*verde escuro*/,"#90EE90"/*verde claro*/);
+        this.r5 = new Rect(100,120,180,140,"#006400"/*verde escuro*/,"#90EE90"/*verde claro*/);
     }
 
     public void paint (Graphics g) {
@@ -36,6 +36,7 @@ class PaintFrame extends JFrame {
         this.r2.paint(g);
         this.r3.paint(g);
         this.r4.paint(g);
+        this.r5.paint(g);
     }
 }
 
