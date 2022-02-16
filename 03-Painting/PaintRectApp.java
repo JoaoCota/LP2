@@ -80,8 +80,8 @@ class Rect {
     void paint (Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.decode(this.corContorno));
-        g.drawRect(this.x,this.y, this.w,this.h);
-        g.setColor(Color.decode(this.corFundo));
-        g.fillRect(this.x+1,this.y+1, this.w-1,this.h-1);
+        g2d.drawRect(this.x,this.y, this.w,this.h);
+        g2d.setColor(Color.decode(this.corFundo));
+        g2d.fillRect(this.x+1,this.y+1, this.w-1,this.h-1);
     }
 }
