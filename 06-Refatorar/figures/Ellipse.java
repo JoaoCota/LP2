@@ -7,10 +7,7 @@ import java.awt.geom.Ellipse2D.Double;
 public class Ellipse extends Figure {
 
     public Ellipse (int x, int y, int w, int h) {
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
+        super(x,y,w,h);
     }
     
     public void paint (Graphics g) {
