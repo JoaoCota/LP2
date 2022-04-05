@@ -133,18 +133,20 @@ class ListFrame extends JFrame {
             public void mouseDragged(MouseEvent evt){
                 Point newMousePos = getMousePosition();
                 // Redimensionar.
-                if(quadradinhoFocus){    
-                    figs.remove(focus);
-                    focus.w += newMousePos.x - posMouse.x;
-                    focus.h += newMousePos.y - posMouse.y;
-                    if(focus.getClass().getSimpleName().equals("Pentagon")){
-                        Pentagon p = (Pentagon) focus;
-                        focus = new Pentagon(focus.x, focus.y, focus.w, focus.h, focus.corContorno, p.corFundo);
+                if(quadradinhoFocus){   
+                    if(newMousePos.x>=focus.x && newMousePos.y>=focus.y){ 
+                        figs.remove(focus);
+                        focus.w += newMousePos.x - posMouse.x;
+                        focus.h += newMousePos.y - posMouse.y;
+                        if(focus.getClass().getSimpleName().equals("Pentagon")){
+                            Pentagon p = (Pentagon) focus;
+                            focus = new Pentagon(focus.x, focus.y, focus.w, focus.h, focus.corContorno, p.corFundo);
+                        }
+                        figs.add(focus);
+                        repaint();
+                        posMouse.x = newMousePos.x;
+                        posMouse.y = newMousePos.y;
                     }
-                    figs.add(focus);
-                    repaint();
-                    posMouse.x = newMousePos.x;
-                    posMouse.y = newMousePos.y;
                 }
                 // Mover.
                 else{
