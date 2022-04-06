@@ -1,0 +1,48 @@
+1. "Ligável" (televisão, smartwatch, computador)
+- ajustarResolução(tamanho X, tamanho Y)
+- interagir(Interagindo no momento)
+- interface Ligavel{
+    void ajustarResolução(int tamanhoTelaX, int tamanhoTelaY);
+    boolean interagir(boolean emUso);
+}
+- class televisao implements Ligavel{
+    void ajustarResolução(int tamanhoTelaX, tamanhoTelaY){
+        int novoTamanhoTelaX;
+        int novoTamanhoTelaY;
+
+        int tamanhoTelaX += novoTamanhoTelaX;
+        int tamanhoTelaY += novoTamanhoTelaY;
+    }
+
+    boolean interagir(boolean emUso){
+        if(emUso){
+            return true;
+        }
+    }
+}
+
+2. "Criável" (animal, filho, planta)
+- alimentar(quantidade, temperatura)
+- relacionar(Se relacionando no momento)
+- interface Criavel{
+    void alimentar(float quantidade, float temperatura);
+    boolean relacionar(boolean emAcao);
+}
+- class filho implements Criavel{
+    void alimentar(float quantidade, float temperatura){
+        boolean fome = false;
+        if(fome){
+            alimentar(quantidade, temperatura);
+        }
+        else{
+            System.out.println("Sem fome");
+        }
+    }
+
+    boolean relacionar(boolean emAcao){
+        if(emAcao){
+            System.out.println("Hora de brincar!");
+            return true;
+        }
+    }
+}
