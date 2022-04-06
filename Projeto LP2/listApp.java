@@ -225,7 +225,7 @@ class ListFrame extends JFrame {
                     }
                 }
                 // Alterando foco por tab.
-                else if(evt.getKeyCode() == KeyEvent.VK_TAB){
+                else if(evt.getKeyCode() == 9){
                     focus = figs.get(0);
                     figs.remove(figs.get(0));
                     figs.add(focus);
