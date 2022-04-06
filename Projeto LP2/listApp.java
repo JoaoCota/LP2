@@ -30,11 +30,9 @@ class ListFrame extends JFrame {
     Rect miniRectFocus = new Rect (0, 0, 12, 12, Color.red, Color.white);
     boolean quadradinhoFocus = false;
     boolean coresFocus = false;
-    int distX, distY;
-
-
 
     ListFrame (){
+        setFocusTraversalKeysEnabled(false);
         this.setTitle("Projeto 1/2 - Joao Cota");
         this.setSize(700, 700);
         setLocationRelativeTo(null);
@@ -94,9 +92,7 @@ class ListFrame extends JFrame {
                 else if(miniRectFocus.clicked(posMouse.x, posMouse.y)){
         			quadradinhoFocus = true;
         			coresFocus = false;
-        			distX = miniRectFocus.x - posMouse.x;
-            		distY = miniRectFocus.y - posMouse.y;
-        		
+
             	// Teste de clique em uma figura ou em espaço vazio.
             	// Clique em figura, informações alocadas em focus.
             	// Senão, focus null.
@@ -115,12 +111,9 @@ class ListFrame extends JFrame {
                     }
                 	
                 	// Clique em figura, ela vai para o final da lista.
-                	// Obtemos a distancia entre o mouse e a figura, para funcionalidade de movimentação.
             		if(focus != null){
             			figs.remove(focus);       	
                     	figs.add(focus);
-                    	distX = focus.x - posMouse.x;
-                		distY = focus.y - posMouse.y;
             		}
             		repaint();
                 }
@@ -134,7 +127,7 @@ class ListFrame extends JFrame {
                 Point newMousePos = getMousePosition();
                 // Redimensionar.
                 if(quadradinhoFocus){   
-                    if(newMousePos.x>=focus.x && newMousePos.y>=focus.y){ 
+                    if(newMousePos.x>=focus.x+10 && newMousePos.y>=focus.y+10){ 
                         figs.remove(focus);
                         focus.w += newMousePos.x - posMouse.x;
                         focus.h += newMousePos.y - posMouse.y;
@@ -148,7 +141,7 @@ class ListFrame extends JFrame {
                         posMouse.y = newMousePos.y;
                     }
                 }
-                // Mover.
+                // Mover com mouse.
                 else{
                     if(!coresFocus){
                         if(focus!= null){
@@ -179,8 +172,66 @@ class ListFrame extends JFrame {
                 int h = 50;
                 Color corContorno = new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
                 Color corFundo = new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
+
+                if(evt.getKeyCode() == 8){
+                    figs.remove(focus);
+                    focus = null;
+                    rectFocus = null;
+                } 
+                else if(evt.getKeyCode() == 127){
+                    figs.removeAll(figs);
+                    focus = null;
+                    rectFocus = null;
+                }
+                //mover com teclado
+                else if(evt.getKeyChar() == 'w'){
+                    focus.y -= 5;
+                    if(focus.getClass().getSimpleName().equals("Pentagon")){
+                        figs.remove(focus);
+                        Pentagon p = (Pentagon) focus;
+                        focus = new Pentagon(focus.x, focus.y, focus.w, focus.h, focus.corContorno, p.corFundo);
+                        figs.add(focus);
+                        repaint();
+                    }
+                }
+                else if(evt.getKeyChar() == 's'){
+                    focus.y += 5;
+                    if(focus.getClass().getSimpleName().equals("Pentagon")){
+                        figs.remove(focus);
+                        Pentagon p = (Pentagon) focus;
+                        focus = new Pentagon(focus.x, focus.y, focus.w, focus.h, focus.corContorno, p.corFundo);
+                        figs.add(focus);
+                        repaint();
+                    }
+                }
+                else if(evt.getKeyChar() == 'a'){
+                    focus.x -= 5;
+                    if(focus.getClass().getSimpleName().equals("Pentagon")){
+                        figs.remove(focus);
+                        Pentagon p = (Pentagon) focus;
+                        focus = new Pentagon(focus.x, focus.y, focus.w, focus.h, focus.corContorno, p.corFundo);
+                        figs.add(focus);
+                        repaint();
+                    }
+                }
+                else if(evt.getKeyChar() == 'd'){
+                    focus.x += 5;
+                    if(focus.getClass().getSimpleName().equals("Pentagon")){
+                        figs.remove(focus);
+                        Pentagon p = (Pentagon) focus;
+                        focus = new Pentagon(focus.x, focus.y, focus.w, focus.h, focus.corContorno, p.corFundo);
+                        figs.add(focus);
+                        repaint();
+                    }
+                }
+                // Alterando foco por tab.
+                else if(evt.getKeyCode() == KeyEvent.VK_TAB){
+                    focus = figs.get(0);
+                    figs.remove(figs.get(0));
+                    figs.add(focus);
+                }
                 // Exceção para não criar fora da tela
-                if((posMouse.x >= 645 || posMouse.y >= 645)){
+                else if((posMouse.x >= 645 || posMouse.y >= 645)){
                     if(evt.getKeyChar() == 'l'){
                         figs.add(new Line(x-50, y-50, w, 0, corContorno));
                         focus = figs.get(figs.size()-1);
@@ -215,19 +266,9 @@ class ListFrame extends JFrame {
                         figs.add(new Pentagon(x, y, w, h, corContorno, corFundo));
                         focus = figs.get(figs.size()-1);              	
                     }
-                }
-                if(evt.getKeyCode() == 8){
-                    figs.remove(focus);
-                    focus = null;
-                    rectFocus = null;
                 } 
-                else if(evt.getKeyCode() == 127){
-                    figs.removeAll(figs);
-                    focus = null;
-                    rectFocus = null;
-                }
                 repaint();
-                }
+            }
 		});
 
     }
