@@ -23,8 +23,12 @@ João Cota
 - :keyboard: R: Criar um retângulo;
 - :keyboard: L: Criar uma linha;
 - :keyboard: P: Criar um polígono;
-- :keyboard: DEL: Deletar TODAS as figuras;
+- :keyboard: W: Mover para cima a figura selecionada;
+- :keyboard: S: Mover para baixo a figura selecionada;
+- :keyboard: A: Mover para o lado esquerdo a figura selecionada;
+- :keyboard: D: Mover para o lado direito a figura selecionada;
 - :keyboard: BACKSPACE: Deletar figura selecionada.
+- :keyboard: DEL: Deletar TODAS as figuras;
 - Para selecionar uma figura: :computer_mouse: Clique com o botão esquerdo do mouse em cima de uma figura, um quadrado vermelho na figura significa que a mesma já está selecionada;
 - Para alterar a cor de contorno: :computer_mouse: Clique com o botão esquerdo do mouse em cima da cor desejada na paleta de cores superior. A figura somente terá sua cor alterada se ela estiver selecionada;
 - Para alterar a cor de fundo: :computer_mouse: Clique com o botão esquerdo do mouse em cima da cor desejada na paleta de cores inferior. A figura somente terá sua cor alterada se ela estiver selecionada;
