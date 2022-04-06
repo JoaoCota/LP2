@@ -29,10 +29,11 @@ João Cota
 - :keyboard: D: Mover para o lado direito a figura selecionada;
 - :keyboard: BACKSPACE: Deletar figura selecionada.
 - :keyboard: DEL: Deletar TODAS as figuras;
+- :keyboard: TAB: Alterar o foco entre as figuras desenhadas;
 - Para selecionar uma figura: :computer_mouse: Clique com o botão esquerdo do mouse em cima de uma figura, um quadrado vermelho na figura significa que a mesma já está selecionada;
 - Para alterar a cor de contorno: :computer_mouse: Clique com o botão esquerdo do mouse em cima da cor desejada na paleta de cores superior. A figura somente terá sua cor alterada se ela estiver selecionada;
 - Para alterar a cor de fundo: :computer_mouse: Clique com o botão esquerdo do mouse em cima da cor desejada na paleta de cores inferior. A figura somente terá sua cor alterada se ela estiver selecionada;
-- Para arrastar uma figura: :computer_mouse: Selecione a figura, clique na figura com o botão esquerdo e mantenha o botão pressionado e arraste a figura para onde deseja.
+- Para arrastar uma figura: :computer_mouse: Selecione a figura, clique na figura com o botão esquerdo e mantenha o botão pressionado e arraste a figura para onde deseja;
 - Para redimensionar uma figura: :computer_mouse: Selecione a figura, clique no pequeno quadrado no canto inferior direito da figura com o botão esquerdo do mouse e mantenha o botão pressionado e arraste para redimensionar a figura.
 
 ### 🛠 Tecnologia
