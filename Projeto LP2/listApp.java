@@ -102,10 +102,7 @@ class ListFrame extends JFrame {
                 	coresFocus = false;
                 	focus = null;
                 	for(Figuras fig: figs){
-                        if(((fig.x <= posMouse.x && posMouse.x <= (fig.x + fig.w)) && 
-                           (fig.y <= posMouse.y && posMouse.y <= (fig.y + fig.h))) || 
-                           ((fig.x >= posMouse.x && posMouse.x >= (fig.x + fig.w)) && 
-                           (fig.y >= posMouse.y && posMouse.y >= (fig.y + fig.h)))){
+                        if(fig.clicked(posMouse.x, posMouse.y)){
                         	focus = fig;                              	
                         }
                     }

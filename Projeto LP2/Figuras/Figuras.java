@@ -2,8 +2,9 @@ package Figuras;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import iVisible.iVisible;
 
-public abstract class Figuras{
+public abstract class Figuras implements iVisible{
     public int x, y;
     public int w, h;
     public Color corContorno;
