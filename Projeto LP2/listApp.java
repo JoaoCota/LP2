@@ -8,10 +8,15 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 import Figuras.*;
+import buttons.*;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.awt.Color;
+import java.io.*;
+import buttons.Botao;
 
 class listApp {
     public static void main (String[] args){
@@ -21,36 +26,79 @@ class listApp {
 }
 
 class ListFrame extends JFrame {
-    ArrayList<Figuras> figs = new ArrayList<Figuras>();
-    ArrayList<Rect> cores = new ArrayList<Rect>();
-    Random rand = new Random();
-    Point posMouse = null;
-    Figuras focus = null;
-    Rect rectFocus = null;
-    Rect miniRectFocus = new Rect (0, 0, 12, 12, Color.red, Color.white);
-    boolean quadradinhoFocus = false;
-    boolean coresFocus = false;
+    private ArrayList<Figuras> figs = new ArrayList<Figuras>();
+    private ArrayList<Rect> cores = new ArrayList<Rect>();
+    private ArrayList<Botao> botoes = new ArrayList<Botao>();
+    private Botao botaoFocus = null;
+    private Random rand = new Random();
+    private Point posMouse = null;
+    private Figuras focus = null;
+    private Rect rectFocus = null;
+    private Rect miniRectFocus = new Rect (0, 0, 12, 12, Color.red, Color.white);
+    private boolean quadradinhoFocus = false;
+    private boolean coresFocus = false;
 
-    ListFrame (){
+    ListFrame(){
         setFocusTraversalKeysEnabled(false);
         this.setTitle("Projeto 1/2 - Joao Cota");
         this.setSize(700, 700);
         setLocationRelativeTo(null);
         
-        this.addWindowListener (
+        //Abrir arquivo
+        try{
+        	FileInputStream f = new FileInputStream("projeto.bin");
+        	ObjectInputStream o = new ObjectInputStream(f);
+        	this.figs = (ArrayList<Figuras>) o.readObject();
+        	o.close();
+        }
+        catch (Exception x){
+        	System.out.println("Erro ao tentar abrir o arquivo.");
+        }
+        //Salvar arquivo
+        this.addWindowListener(
             new WindowAdapter(){
                 public void windowClosing (WindowEvent e){
+                	try{
+                		FileOutputStream f = new FileOutputStream("projeto.bin");
+                		ObjectOutputStream o = new ObjectOutputStream(f);
+                		o.writeObject(figs);
+                		o.flush();
+                		o.close();
+                	}
+                    catch (Exception x){
+                		System.out.println("Erro ao tentar gravar o arquivo.");
+                	}
                     System.exit(0);
                 }
             }
         );
 
+        //Criando botões
+        botoes.add(new Botao(1, new Line(15, 500, 35, 35, Color.black, Color.black)));
+        botoes.add(new Botao(2, new Rect(15, 545, 35, 35, Color.black, Color.black)));
+        botoes.add(new Botao(3, new Ellipse(15, 590, 35, 35, Color.black, Color.black)));
+        botoes.add(new Botao(4, new Pentagon(15, 635, 35, 35, Color.black, Color.black)));
+
         // Manipulações de clique
         this.addMouseListener(new MouseAdapter(){
         	public void mousePressed (MouseEvent evt){
         		posMouse = getMousePosition();
+
+                if((10<=posMouse.x && posMouse.x<=55) && (495<=posMouse.y && posMouse.y<=675)){
+                    System.out.println("1");
+                    quadradinhoFocus = false;
+                    coresFocus = false;
+                    focus = null;
+                    for(Botao botao: botoes){
+                        if(botao.clicked(posMouse.x, posMouse.y)){
+                            botaoFocus = botao;
+                        }
+                    }
+                    repaint();
+                }
+                
                 // Teste do clique na paleta
-                if(focus != null && (cores.get(0).x <= posMouse.x && posMouse.x <= (cores.get(21).x + cores.get(21).w)) &&
+                else if(focus != null && (cores.get(0).x <= posMouse.x && posMouse.x <= (cores.get(21).x + cores.get(21).w)) &&
                   (cores.get(0).y <= posMouse.y && posMouse.y <= (cores.get(21).y + cores.get(21).h))){
                     coresFocus = true;
                     quadradinhoFocus = false;
@@ -67,43 +115,50 @@ class ListFrame extends JFrame {
                         		if(focus.getClass().getSimpleName().equals("Line")){
                         			focus.corContorno = cor.corFundo;                        			
                         		} 
-                                else if(focus.getClass().getSimpleName().equals("Rect")){
-                        			Rect r  = new Rect(focus.x, focus.y, focus.w, focus.h, focus.corContorno, cor.corFundo);
-                        			focus = r;                        			
-                        		} 
-                                else if(focus.getClass().getSimpleName().equals("Ellipse")){
-                        			Ellipse e = new Ellipse(focus.x, focus.y, focus.w, focus.h, focus.corContorno, cor.corFundo);
-                        			focus = e;                        			
-                        		} 
                                 else{
-                        			Pentagon p = new Pentagon(focus.x, focus.y, focus.w, focus.h, focus.corContorno, cor.corFundo);
-                        			focus = p;                       			
-                        		}                        		
+                                    focus.corFundo = cor.corFundo;
+                                }            		
                         		figs.add(focus);
                         	}
          		        	repaint();
-                        	break;
+                            break;
                         }
                         i++;
                     }
-
+                }
         		// Teste de clique no mini quadrado de foco.
-        		} 
+                 
                 else if(miniRectFocus.clicked(posMouse.x, posMouse.y)){
         			quadradinhoFocus = true;
         			coresFocus = false;
-
+                }
             	// Teste de clique em uma figura ou em espaço vazio.
             	// Clique em figura, informações alocadas em focus.
             	// Senão, focus null.
-                } 
                 else {
                 	quadradinhoFocus = false;
                 	coresFocus = false;
                 	focus = null;
-                	for(Figuras fig: figs){
-                        if(fig.clicked(posMouse.x, posMouse.y)){
-                        	focus = fig;                              	
+
+                    if (botaoFocus != null) {
+                        int idx = botaoFocus.getIdx();
+                        if (idx == 1) {                  			
+                            figs.add(new Line(posMouse.x, posMouse.y, 50, 0, Color.black, Color.white));                           
+                        } else if (idx == 2) {
+                            figs.add(new Rect(posMouse.x, posMouse.y, 50, 50, Color.black, Color.white));
+                        } else if (idx == 3) {
+                            figs.add(new Ellipse(posMouse.x, posMouse.y, 50, 50, Color.black, Color.white));
+                        } else {
+                            figs.add(new Pentagon(posMouse.x, posMouse.y, 50, 50, Color.black, Color.white));
+                        }
+                        focus = figs.get(figs.size()-1);
+                        botaoFocus = null;
+                    }
+                    else{
+                        for(Figuras fig: figs){
+                            if(fig.clicked(posMouse.x, posMouse.y)){
+                                focus = fig;                            	
+                            }
                         }
                     }
                 	
@@ -112,10 +167,13 @@ class ListFrame extends JFrame {
             			figs.remove(focus);       	
                     	figs.add(focus);
             		}
+                    else{
+                        rectFocus.x = -10;
+                        rectFocus.y = -10;
+                    }
             		repaint();
                 }
         	}
-
         });
 
         // Mover e Redimensionar figuras.
@@ -179,6 +237,8 @@ class ListFrame extends JFrame {
                     figs.removeAll(figs);
                     focus = null;
                     rectFocus = null;
+                    miniRectFocus.x = -10;
+                    miniRectFocus.y = -10;
                 }
                 //mover com teclado
                 else if(evt.getKeyChar() == 'w'){
@@ -230,7 +290,7 @@ class ListFrame extends JFrame {
                 // Exceção para não criar fora da tela
                 else if((posMouse.x >= 645 || posMouse.y >= 645)){
                     if(evt.getKeyChar() == 'l'){
-                        figs.add(new Line(x-50, y-50, w, 0, corContorno));
+                        figs.add(new Line(x-50, y-50, w, 0, corContorno, corFundo));
                         focus = figs.get(figs.size()-1);
                     } 
                     else if(evt.getKeyChar() == 'r'){
@@ -248,7 +308,7 @@ class ListFrame extends JFrame {
                 }
                 else{
                     if(evt.getKeyChar() == 'l'){
-                        figs.add(new Line(x, y, w, 0, corContorno));
+                        figs.add(new Line(x, y, w, 0, corContorno, corFundo));
                         focus = figs.get(figs.size()-1);
                     } 
                     else if(evt.getKeyChar() == 'r'){
@@ -274,22 +334,27 @@ class ListFrame extends JFrame {
         super.paint(g);
 
         for(Figuras fig: this.figs){
-            fig.paint(g);
+            if(fig == focus){
+                fig.paint(g, true);
+                miniRectFocus.x = focus.x + focus.w - 8;
+        	    miniRectFocus.y = focus.y + focus.h - 8;
+            }
+            else{
+                fig.paint(g, false);
+            }
+        }
+
+        for (Botao botao: botoes) {
+        	botao.paint(g, botao == botaoFocus);
         }
 
         // Teste figura em foco.
         // Caso sim pinta as figuras de foco (quadrado maior e menor).
         // Pinta paleta de cores.
         if(focus != null){
-            rectFocus = new Rect(focus.x -4, focus.y -4, focus.w + 8, focus.h + 8, Color.red, Color.white);
-        	rectFocus.paintFocus(g);
-        	miniRectFocus.x = rectFocus.x + rectFocus.w - 8;
-        	miniRectFocus.y = rectFocus.y + rectFocus.h - 8;
-        	miniRectFocus.paint(g);
-        	
         	paleta(this);
         	for(Rect cor: cores){
-                cor.paint(g);
+                cor.paint(g, false);
             }
         }
     }
