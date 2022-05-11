@@ -30,6 +30,7 @@ João Cota
 - :keyboard: BACKSPACE: Deletar figura selecionada.
 - :keyboard: DEL: Deletar TODAS as figuras;
 - :keyboard: TAB: Alterar o foco entre as figuras desenhadas;
+- Para criar uma figura sem uso do teclado, clique com o botão esquerdo do mouse no botão que representa o a figura que deseja criar e depois clique com o botão esquerdo do mouse na área que deseja criá-la;
 - Para selecionar uma figura: :computer_mouse: Clique com o botão esquerdo do mouse em cima de uma figura, um quadrado vermelho na figura significa que a mesma já está selecionada;
 - Para alterar a cor de contorno: :computer_mouse: Clique com o botão esquerdo do mouse em cima da cor desejada na paleta de cores superior. A figura somente terá sua cor alterada se ela estiver selecionada;
 - Para alterar a cor de fundo: :computer_mouse: Clique com o botão esquerdo do mouse em cima da cor desejada na paleta de cores inferior. A figura somente terá sua cor alterada se ela estiver selecionada;
