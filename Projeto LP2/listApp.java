@@ -85,7 +85,6 @@ class ListFrame extends JFrame {
         		posMouse = getMousePosition();
 
                 if((10<=posMouse.x && posMouse.x<=55) && (495<=posMouse.y && posMouse.y<=675)){
-                    System.out.println("1");
                     quadradinhoFocus = false;
                     coresFocus = false;
                     focus = null;
@@ -168,8 +167,8 @@ class ListFrame extends JFrame {
                     	figs.add(focus);
             		}
                     else{
-                        rectFocus.x = -10;
-                        rectFocus.y = -10;
+                        miniRectFocus.x = -10;
+                        miniRectFocus.y = -10;
                     }
             		repaint();
                 }
